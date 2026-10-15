@@ -1,0 +1,18 @@
+#include <stdio.h>
+
+int main() {
+
+    int pid = 1001;
+    int ppid = 1000;
+    int child_pid = 1002;
+
+    printf("Parent Process\n");
+    printf("Process ID (PID): %d\n", pid);
+    printf("Parent Process ID (PPID): %d\n", ppid);
+
+    printf("\nChild Process\n");
+    printf("Process ID (PID): %d\n", child_pid);
+    printf("Parent Process ID (PPID): %d\n", pid);
+
+    return 0;
+}
