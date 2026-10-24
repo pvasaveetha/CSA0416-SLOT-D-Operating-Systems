@@ -1,0 +1,21 @@
+
+#include <stdio.h>
+
+int main() {
+    int shared_memory = 0;
+
+    printf("Inter-Process Communication using Shared Memory\n");
+
+    // Simulate the producer process
+    printf("\nProducer Process:\n");
+    shared_memory = 100;
+    printf("Producer writes data: %d\n", shared_memory);
+
+    // Simulate the consumer process
+    printf("\nConsumer Process:\n");
+    printf("Consumer reads data: %d\n", shared_memory);
+
+    printf("\nCommunication completed successfully.\n");
+
+    return 0;
+}
