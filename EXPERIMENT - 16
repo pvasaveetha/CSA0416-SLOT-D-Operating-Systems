@@ -1,0 +1,44 @@
+
+#include <stdio.h>
+
+struct Employee {
+    int id;
+    char name[30];
+    float salary;
+};
+
+int main() {
+    struct Employee e[10];
+    int n, i, searchId, found = 0;
+
+    printf("Enter number of employees (max 10): ");
+    scanf("%d", &n);
+
+    if (n < 1 || n > 10) {
+        printf("Invalid number of employees!\n");
+        return 0;
+    }
+
+    for (i = 0; i < n; i++) {
+        printf("\nEnter ID, name and salary for employee %d:\n", i + 1);
+        scanf("%d %29s %f", &e[i].id, e[i].name, &e[i].salary);
+    }
+
+    printf("\nEnter employee number to access (1 to %d): ", n);
+    scanf("%d", &searchId);
+
+    if (searchId < 1 || searchId > n) {
+        printf("Invalid employee number!\n");
+        return 0;
+    }
+
+    /* Random access using record position */
+    i = searchId - 1;
+
+    printf("\nEmployee Details:\n");
+    printf("ID: %d\n", e[i].id);
+    printf("Name: %s\n", e[i].name);
+    printf("Salary: %.2f\n", e[i].salary);
+
+    return 0;
+}
