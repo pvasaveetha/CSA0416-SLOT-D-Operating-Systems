@@ -1,0 +1,23 @@
+
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char message_queue[100];
+    char message[] = "Hello from Sender Process!";
+
+    printf("IPC using Message Queue\n");
+
+    // Sender process
+    strcpy(message_queue, message);
+    printf("\nSender Process:\n");
+    printf("Message sent: %s\n", message);
+
+    // Receiver process
+    printf("\nReceiver Process:\n");
+    printf("Message received: %s\n", message_queue);
+
+    printf("\nCommunication completed successfully.\n");
+
+    return 0;
+}
