@@ -1,0 +1,77 @@
+
+#include <stdio.h>
+
+int main() {
+    int block[20], process[20], allocation[20];
+    int m, n, i, j, choice, best;
+
+    printf("Enter number of memory blocks: ");
+    scanf("%d", &m);
+
+    printf("Enter size of each memory block:\n");
+    for (i = 0; i < m; i++) {
+        scanf("%d", &block[i]);
+    }
+
+    printf("Enter number of processes: ");
+    scanf("%d", &n);
+
+    printf("Enter memory required by each process:\n");
+    for (i = 0; i < n; i++) {
+        scanf("%d", &process[i]);
+        allocation[i] = -1;
+    }
+
+    printf("\n1. First Fit\n");
+    printf("2. Best Fit\n");
+    printf("3. Worst Fit\n");
+    printf("Enter your choice: ");
+    scanf("%d", &choice);
+
+    if (choice < 1 || choice > 3) {
+        printf("Invalid choice!\n");
+        return 0;
+    }
+
+    for (i = 0; i < n; i++) {
+        best = -1;
+
+        for (j = 0; j < m; j++) {
+            if (block[j] >= process[i]) {
+                if (choice == 1) {
+                    best = j;
+                    break;
+                } else if (choice == 2) {
+                    if (best == -1 || block[j] < block[best])
+                        best = j;
+                } else {
+                    if (best == -1 || block[j] > block[best])
+                        best = j;
+                }
+            }
+        }
+
+        if (best != -1) {
+            allocation[i] = best;
+            block[best] -= process[i];
+        }
+    }
+
+    printf("\nProcess\tMemory Required\tAllocated Block\n");
+
+    for (i = 0; i < n; i++) {
+        printf("P%d\t%d\t\t", i + 1, process[i]);
+
+        if (allocation[i] != -1)
+            printf("%d\n", allocation[i] + 1);
+        else
+            printf("Not Allocated\n");
+    }
+
+    printf("\nRemaining memory in each block:\n");
+    for (i = 0; i < m; i++) {
+        printf("Block %d: %d\n", i + 1, block[i]);
+    }
+
+    return 0;
+}
