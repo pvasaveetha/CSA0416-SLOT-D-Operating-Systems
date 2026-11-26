@@ -1,0 +1,56 @@
+
+#include <stdio.h>
+#include <sys/stat.h>
+
+int main()
+{
+    struct stat fileStat;
+    char filename[50];
+
+    printf("Enter file name: ");
+    scanf("%49s", filename);
+
+    // Create a file
+    FILE *fp = fopen(filename, "w");
+
+    if(fp == NULL)
+    {
+        printf("File creation failed!\n");
+        return 1;
+    }
+
+    fprintf(fp, "Linux File Permission Example\n");
+    fclose(fp);
+
+    // Set permissions: Owner = rwx, Group = r-x, Others = r--
+    chmod(filename, 0744);
+
+    // Get file permissions
+    if(stat(filename, &fileStat) < 0)
+    {
+        printf("Unable to get file permissions!\n");
+        return 1;
+    }
+
+    printf("\nFile Name: %s\n", filename);
+    printf("\nFile Access Permissions:\n");
+
+    printf("Owner  : ");
+    printf("%s", (fileStat.st_mode & S_IRUSR) ? "Read " : "");
+    printf("%s", (fileStat.st_mode & S_IWUSR) ? "Write " : "");
+    printf("%s", (fileStat.st_mode & S_IXUSR) ? "Execute" : "");
+
+    printf("\nGroup  : ");
+    printf("%s", (fileStat.st_mode & S_IRGRP) ? "Read " : "");
+    printf("%s", (fileStat.st_mode & S_IWGRP) ? "Write " : "");
+    printf("%s", (fileStat.st_mode & S_IXGRP) ? "Execute" : "");
+
+    printf("\nOthers : ");
+    printf("%s", (fileStat.st_mode & S_IROTH) ? "Read " : "");
+    printf("%s", (fileStat.st_mode & S_IWOTH) ? "Write " : "");
+    printf("%s", (fileStat.st_mode & S_IXOTH) ? "Execute" : "");
+
+    printf("\n\nNumeric Permission: 744\n");
+
+    return 0;
+}
