@@ -1,0 +1,83 @@
+
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Block
+{
+    int blockNumber;
+    struct Block *next;
+};
+
+int main()
+{
+    struct Block *head = NULL, *tail = NULL;
+    struct Block *newBlock, *temp;
+
+    int n, i, block;
+
+    printf("Enter the number of blocks: ");
+    scanf("%d", &n);
+
+    // Create linked blocks
+    for(i = 0; i < n; i++)
+    {
+        printf("Enter block number %d: ", i + 1);
+        scanf("%d", &block);
+
+        newBlock = (struct Block *)malloc(sizeof(struct Block));
+
+        if(newBlock == NULL)
+        {
+            printf("Memory allocation failed.\n");
+            return 1;
+        }
+
+        newBlock->blockNumber = block;
+        newBlock->next = NULL;
+
+        if(head == NULL)
+        {
+            head = newBlock;
+            tail = newBlock;
+        }
+        else
+        {
+            tail->next = newBlock;
+            tail = newBlock;
+        }
+    }
+
+    // Display linked allocation
+    printf("\nLinked File Allocation:\n");
+
+    printf("First Block: %d\n", head->blockNumber);
+    printf("Last Block: %d\n", tail->blockNumber);
+
+    printf("\nBlock Number\tNext Block\n");
+
+    temp = head;
+
+    while(temp != NULL)
+    {
+        printf("%d\t\t", temp->blockNumber);
+
+        if(temp->next != NULL)
+            printf("%d\n", temp->next->blockNumber);
+        else
+            printf("NULL\n");
+
+        temp = temp->next;
+    }
+
+    // Free allocated memory
+    temp = head;
+
+    while(temp != NULL)
+    {
+        struct Block *nextBlock = temp->next;
+        free(temp);
+        temp = nextBlock;
+    }
+
+    return 0;
+}
