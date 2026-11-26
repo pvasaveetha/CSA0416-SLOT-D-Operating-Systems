@@ -1,0 +1,39 @@
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+    int n, i, head, totalHeadMovement = 0;
+    int request[100];
+
+    printf("Enter the number of disk requests: ");
+    scanf("%d", &n);
+
+    printf("Enter the initial head position: ");
+    scanf("%d", &head);
+
+    printf("Enter the disk requests:\n");
+    for(i = 0; i < n; i++)
+    {
+        scanf("%d", &request[i]);
+    }
+
+    printf("\nFCFS Disk Scheduling\n");
+    printf("Disk Head Movement:\n");
+
+    printf("%d", head);
+
+    for(i = 0; i < n; i++)
+    {
+        totalHeadMovement += abs(request[i] - head);
+        head = request[i];
+
+        printf(" -> %d", head);
+    }
+
+    printf("\n\nTotal Head Movement = %d tracks\n",
+           totalHeadMovement);
+
+    return 0;
+}
