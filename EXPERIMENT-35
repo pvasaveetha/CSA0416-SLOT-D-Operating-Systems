@@ -1,0 +1,35 @@
+
+#include <stdio.h>
+
+int main()
+{
+    int indexBlock[50], n, i, start;
+
+    printf("Enter the index block number: ");
+    scanf("%d", &start);
+
+    printf("Enter the number of file blocks: ");
+    scanf("%d", &n);
+
+    printf("Enter the block numbers allocated to the file:\n");
+
+    for(i = 0; i < n; i++)
+    {
+        scanf("%d", &indexBlock[i]);
+    }
+
+    printf("\nIndexed File Allocation\n");
+
+    printf("Index Block: %d\n", start);
+
+    printf("\nIndex Entry\tFile Block\n");
+
+    for(i = 0; i < n; i++)
+    {
+        printf("%d\t\t%d\n", i, indexBlock[i]);
+    }
+
+    printf("\nFile blocks accessed successfully.\n");
+
+    return 0;
+}
