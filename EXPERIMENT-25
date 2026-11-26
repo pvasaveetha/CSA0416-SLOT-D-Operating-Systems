@@ -1,0 +1,89 @@
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <sys/stat.h>
+#include <dirent.h>
+#include <string.h>
+
+int main()
+{
+    int fd, flags, n;
+    char buffer[100];
+    char data[] = "UNIX I/O System Calls Demonstration";
+
+    struct stat fileInfo;
+    DIR *dir;
+    struct dirent *entry;
+
+    // Create and open a file
+    fd = open("/tmp/sample.txt",
+              O_CREAT | O_RDWR | O_TRUNC, 0666);
+
+    if(fd == -1)
+    {
+        perror("File opening failed");
+        return 1;
+    }
+
+    printf("File opened successfully.\n");
+
+    // Write data into file
+    write(fd, data, strlen(data));
+    printf("Data written successfully.\n");
+
+    // Demonstrate fcntl()
+    flags = fcntl(fd, F_GETFL);
+    printf("fcntl() executed successfully.\n");
+
+    // Demonstrate lseek()
+    lseek(fd, 0, SEEK_SET);
+    printf("lseek() executed successfully.\n");
+
+    // Read data from file
+    n = read(fd, buffer, sizeof(buffer) - 1);
+
+    if(n < 0)
+    {
+        perror("Read failed");
+        close(fd);
+        return 1;
+    }
+
+    buffer[n] = '\0';
+    printf("File contents: %s\n", buffer);
+
+    // Demonstrate stat()
+    if(stat("/tmp/sample.txt", &fileInfo) == 0)
+    {
+        printf("File size: %ld bytes\n",
+               (long)fileInfo.st_size);
+        printf("stat() executed successfully.\n");
+    }
+
+    close(fd);
+
+    // Demonstrate opendir()
+    dir = opendir("/tmp");
+
+    if(dir == NULL)
+    {
+        perror("Directory opening failed");
+        return 1;
+    }
+
+    printf("\nFiles in directory:\n");
+
+    // Demonstrate readdir()
+    while((entry = readdir(dir)) != NULL)
+    {
+        printf("%s\n", entry->d_name);
+    }
+
+    closedir(dir);
+
+    printf("\nDirectory closed successfully.\n");
+
+    return 0;
+}
