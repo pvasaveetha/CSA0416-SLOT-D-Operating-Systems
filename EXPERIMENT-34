@@ -1,0 +1,44 @@
+
+#include <stdio.h>
+
+int main()
+{
+    int n, i, start, length, choice;
+
+    printf("Enter the starting block: ");
+    scanf("%d", &start);
+
+    printf("Enter the number of records: ");
+    scanf("%d", &n);
+
+    printf("\nSequential File Allocation\n");
+
+    printf("\nRecord No.\tBlock No.\n");
+
+    for(i = 0; i < n; i++)
+    {
+        printf("%d\t\t%d\n", i + 1, start + i);
+    }
+
+    printf("\nEnter the record number to access: ");
+    scanf("%d", &choice);
+
+    if(choice >= 1 && choice <= n)
+    {
+        printf("\nAccessing records sequentially:\n");
+
+        for(i = 1; i <= choice; i++)
+        {
+            printf("Record %d accessed from block %d\n",
+                   i, start + i - 1);
+        }
+
+        printf("\nRecord %d accessed successfully.\n", choice);
+    }
+    else
+    {
+        printf("\nInvalid record number.\n");
+    }
+
+    return 0;
+}
